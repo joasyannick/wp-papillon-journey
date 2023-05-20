@@ -15,22 +15,25 @@
     add_action( 'wp_enqueue_scripts', 'pj_add_fonts' );
 
     function pj_add_vue_css()
-    {   wp_enqueue_style
+    {   $css = '/assets/app/index-45f603fe.css';
+        wp_enqueue_style
         (   'pj-vue',
-            get_template_directory_uri() . '/dist/assets/index-eb320d53.css',
+            get_template_directory_uri() . $css,
             array(),
-            date( 'Y.m.d.H.i.s', filemtime( get_template_directory() . '/dist/assets/index-eb320d53.css' ) )
+            date( 'Y.m.d.H.i.s', filemtime( get_template_directory() . $css ) )
         );
     }
     add_action( 'wp_enqueue_scripts', 'pj_add_vue_css' );
 
     function pj_add_vue_js()
-    {   wp_enqueue_script
+    {   $js = '/assets/app/index-251e82cb.js';
+        wp_enqueue_script
         (   'pj-vue',
-            get_template_directory_uri() . '/dist/assets/index-fb58434f.js',
+            get_template_directory_uri() . $js,
             array(),
-            date( 'Y.m.d.H.i.s', filemtime( get_template_directory() . '/dist/assets/index-fb58434f.js' ) )
+            date( 'Y.m.d.H.i.s', filemtime( get_template_directory() . $js ) )
         );
+        do_action( 'qm/debug', 'Template URI: ' . get_template_directory_uri() );
     }
     function pj_add_vue_js_html_attributes( $tag, $handle, $src )
     {   if ( 'pj-vue' !== $handle ) {

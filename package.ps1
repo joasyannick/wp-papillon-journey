@@ -1,0 +1,1 @@
+Compress-Archive -Force -Path *.php, *.css, assets -DestinationPath wp-papillon-journey.zip

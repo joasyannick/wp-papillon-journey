@@ -1,0 +1,1 @@
+zip -r wp-papillon-journey.zip *.php *.css assets
