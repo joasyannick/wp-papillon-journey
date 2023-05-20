@@ -12,7 +12,7 @@
     "build-and-clean": "run-s build-only clean",
     "build-only": "vite build",
     "preview": "vite preview",
-    "clean": "make-dir assets/app && cpy dist/assets/*.js assets/app && cpy dist/assets/*.css assets/app && rimraf dist"
+    "clean": "make-dir assets/app && rimraf -g assets/app/* && cpy dist/assets/*.js assets/app && cpy dist/assets/*.css assets/app && rimraf dist"
   },
   "dependencies": {
     "pinia": "^2.0.36",

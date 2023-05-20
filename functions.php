@@ -15,7 +15,7 @@
     add_action( 'wp_enqueue_scripts', 'pj_add_fonts' );
 
     function pj_add_vue_css()
-    {   $css = '/assets/app/index-45f603fe.css';
+    {   $css = '/assets/app/index.css';
         wp_enqueue_style
         (   'pj-vue',
             get_template_directory_uri() . $css,
@@ -26,7 +26,7 @@
     add_action( 'wp_enqueue_scripts', 'pj_add_vue_css' );
 
     function pj_add_vue_js()
-    {   $js = '/assets/app/index-251e82cb.js';
+    {   $js = '/assets/app/index.js';
         wp_enqueue_script
         (   'pj-vue',
             get_template_directory_uri() . $js,
