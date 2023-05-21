@@ -1,11 +1,27 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import { processExpression } from '@vue/compiler-core';
+</script>
+
+<script lang="ts">
+export default {
+  data() {
+    return {
+      logo: ''
+    }
+  },
+  created() {
+    fetch(window.location.origin + import.meta.env.VITE_BASE_ROUTE + 'wp-json/papillon-journey/v1/logo')
+      .then(response => response.json())
+      .then(data => this.logo = data);
+  },
+}
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="Vue logo" class="logo" :src="logo" width="125" height="125" />
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />

@@ -7,7 +7,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
-    base: env.BASE_ROUTE,
+    base: env.VITE_BASE_ROUTE,
     plugins: [vue()],
     resolve: {
       alias: {
