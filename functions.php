@@ -5,8 +5,16 @@
     //function pj_server_side_url_routes()
     //{   add_rewrite_rule( '(.?.+?)(?:/([0-9]+))?/?$', 'index.php?error=404', 'top' );
     //}
+    require_once get_template_directory() . '/inc/constants.php';
+    require_once get_template_directory() . '/inc/map.php';
 
-    add_theme_support( 'custom-logo' );
+    function pj_theme_support() {
+        add_theme_support( 'custom-logo' );
+    }
+    add_action( 'after_setup_theme', 'pj_theme_support' );
+
+    add_action( 'customize_register', 'pj_customize_register' );
+    add_filter( 'pre_set_theme_mod_pj_map_id', 'pj_on_map_id_updated', 10, 2 );
 
     function pj_add_fonts() {
         wp_enqueue_style(
@@ -47,15 +55,22 @@
     add_action( 'wp_enqueue_scripts', 'pj_add_vue_js' );
 
     function pj_extend_rest_api() {
-        register_rest_route( 'papillon-journey/v1', '/logo', array(
+        register_rest_route( PJ_REST_ROUTE, PJ_LOGO_ROUTE, array(
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => function( $request ) {
                     $custom_logo_id = get_theme_mod( 'custom_logo' );
                     if ( has_custom_logo() ) {
                         return rest_ensure_response( esc_url( wp_get_attachment_image_url( $custom_logo_id, 'full' ) ) );
                     } else {
-                        return rest_ensure_response( esc_url( get_template_directory_uri() . '/assets/logo.svg' ) );
+                        return rest_ensure_response( esc_url( get_template_directory_uri() . PJ_DEFAULT_LOGO_PATH ) );
                     }
+                },
+                'permission_callback' => '__return_true'
+            ) );
+        register_rest_route( PJ_REST_ROUTE, PJ_MAP_TILES_ROUTE, array(
+                'methods' => WP_REST_Server::READABLE,
+                'callback' => function( $request ) {
+                    return rest_ensure_response( esc_url( get_template_directory_uri() ) . PJ_MAP_TILE_PATH );
                 },
                 'permission_callback' => '__return_true'
             ) );

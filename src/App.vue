@@ -1,26 +1,37 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import { useMapStore } from './stores/map'
+import "leaflet/dist/leaflet.css"
+import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet"
+const  mapStore = useMapStore()
 </script>
 
 <script lang="ts">
 export default {
   data() {
     return {
+      zoom: 3,
+      url: '',
       logo: ''
     }
   },
   created() {
-    fetch(window.location.origin + import.meta.env.VITE_BASE_ROUTE + 'wp-json/papillon-journey/v1/logo')
+    fetch(import.meta.env.VITE_WP_REST_URL + 'papillon-journey/v1/logo')
       .then(response => response.json())
       .then(data => this.logo = data);
+    fetch(import.meta.env.VITE_WP_REST_URL + 'papillon-journey/v1/map/tiles')
+      .then(response => response.json())
+      .then(data => console.log( data ) );
   },
 }
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" :src="logo" width="125" height="125" />
+    <img alt="Vue logo" class="logo" :src="logo" width="125" height="125" @click="mapStore.openOrClose()"/>
+    <nav id="pj-navigator" v-show="mapStore.opened">
+    </nav>
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />

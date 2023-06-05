@@ -1,3 +1,3 @@
 <?php get_header(); ?>
-<div id="app"></div>
+<div id="pj-app"></div>
 <?php get_footer();
