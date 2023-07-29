@@ -1,111 +1,57 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-import { useMapStore } from './stores/map'
-import "leaflet/dist/leaflet.css"
-import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet"
-const  mapStore = useMapStore()
+  import { RouterLink, RouterView } from 'vue-router'
+  import { useMapStore } from './stores/map'
+  import "leaflet/dist/leaflet.css"
+  import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet"
+  const  mapStore = useMapStore()
 </script>
 
 <script lang="ts">
-export default {
-  data() {
-    return {
-      zoom: 3,
-      url: '',
-      logo: ''
-    }
-  },
-  created() {
-    fetch(import.meta.env.VITE_WP_REST_URL + 'papillon-journey/v1/logo')
-      .then(response => response.json())
-      .then(data => this.logo = data);
-    fetch(import.meta.env.VITE_WP_REST_URL + 'papillon-journey/v1/map/tiles')
-      .then(response => response.json())
-      .then(data => console.log( data ) );
-  },
-}
+  export default {
+    components: {
+      LMap,
+      LTileLayer,
+    },
+    data() {
+      return {
+        zoom: 2,
+        url: ''
+      }
+    },
+    created() {
+      fetch(import.meta.env.VITE_WP_REST_URL + 'papillon-journey/v1/map/tiles')
+        .then(response => response.json())
+        .then(data => console.log( data ) )
+    },
+  }
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" :src="logo" width="125" height="125" @click="mapStore.openOrClose()"/>
-    <nav id="pj-navigator" v-show="mapStore.opened">
+  <header class="papj-header">
+    <h1>Papillon Journey</h1>
+    <img alt="Vue logo" src="" width="125" height="125" @click="mapStore.openOrClose()"/>
+    <nav v-show="mapStore.opened" style="height:600px; width:800px">
+      <l-map ref="map" v-model:zoom="zoom" :center="[47.41322, -1.219482]">
+        <l-tile-layer :url="url">
+        </l-tile-layer>
+      </l-map>
     </nav>
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
   </header>
-
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  header.papj-header {
+    position: absolute;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  header.papj-header > h1 {
+    font: 16px/calc(16px * 1.5) 'DM Serif Display', serif;
   }
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  header.papj-header > nav {
+    position: absolute;
   }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>
