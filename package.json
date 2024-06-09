@@ -1,0 +1,38 @@
+{
+  "name": "wp-papillon-journey",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "clean": "rimraf dist",
+    "type-check": "vue-tsc --build --force",
+    "preview": "vite preview",
+    "dev": "vite",
+    "build-for-wp": "make-dir wp/assets/app && rimraf -g wp/assets/app/* && cpy --flat dist/assets/*.js wp/assets/app && cpy --flat dist/assets/*.css wp/assets/app",
+    "build-test-files": "vite build --mode test",
+    "build-for-test": "run-s \"build-test-files {@}\" build-for-wp",
+    "test": "run-p type-check build-for-test",
+    "build-production-files": "vite build",
+    "build-for-production": "run-s \"build-production-files {@}\" build-for-wp",
+    "build": "run-p type-check build-for-production"
+  },
+  "dependencies": {
+    "pinia": "^2.1.7",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^20.12.5",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "@vue/tsconfig": "^0.5.1",
+    "cpy-cli": "^5.0.0",
+    "make-dir-cli": "^4.0.0",
+    "npm-run-all2": "^6.1.2",
+    "rimraf": "^5.0.7",
+    "typescript": "~5.4.0",
+    "vite": "^5.2.8",
+    "vue-tsc": "^2.0.11"
+  }
+}
