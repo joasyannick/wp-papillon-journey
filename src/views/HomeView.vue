@@ -2,15 +2,18 @@
   import { RouterLink } from 'vue-router'
   import { ref } from 'vue'
 
+  const perPage = 100
   const updates = ref( [] as { id: number, title: string, excerpt: string, link: string }[] )
   const current = ref( undefined as undefined | number )
 
   const fetchUpdates = async () => {
       try {
-        // TODO: Loop to fetch all updates
-        const response = await fetch( import.meta.env.VITE_WP_REST_URL + 'wp/v2/papj-updates?_fields=id,title.rendered,excerpt.rendered,link' )
-        const json = await response.json()
-        json.forEach( ( update: any ) => updates.value.push( { id: update.id, title: update.title.rendered, excerpt: update.excerpt.rendered, link: update.link } ) )
+        for ( let [ page, more ] = [ 1, true ]; more; page++ ) {
+          const response = await fetch( import.meta.env.VITE_WP_REST_URL + 'wp/v2/papj-updates?per_page=' + perPage + '&page=' + page + '&_fields=id,title.rendered,excerpt.rendered,link' )
+          const json = await response.json()
+          json.forEach( ( update: any ) => updates.value.push( { id: update.id, title: update.title.rendered, excerpt: update.excerpt.rendered, link: update.link } ) )
+          more = page < parseInt( response.headers.get( 'X-WP-TotalPages' )! )
+        }
         if ( updates.value.length ) {
           current.value = 0
         }
@@ -39,7 +42,7 @@
       <header>
         <h2 v-html="update.title"></h2>
       </header>
-      <p v-show="current && updates[ current ].id === update.id" v-html="update.excerpt"></p>
+      <div v-show="current && updates[ current ].id === update.id" v-html="update.excerpt"></div>
       <footer>
         <RouterLink :to="update.link">Read</RouterLink>
       </footer>
