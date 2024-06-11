@@ -3,12 +3,17 @@
   import { ref } from 'vue'
 
   const updates = ref( [] as { id: number, title: string, excerpt: string, link: string }[] )
+  const current = ref( undefined as undefined | number )
 
   const fetchUpdates = async () => {
       try {
-        const response = await fetch( import.meta.env.VITE_WP_REST_URL + 'wp/v2/papj-updates?_fields=id,title.rendered,excerpt.rendered' )
+        // TODO: Loop to fetch all updates
+        const response = await fetch( import.meta.env.VITE_WP_REST_URL + 'wp/v2/papj-updates?_fields=id,title.rendered,excerpt.rendered,link' )
         const json = await response.json()
-        json.forEach( ( update: any ) => updates.value.push( { id: update.id, title: update.title.rendered, excerpt: update.excerpt.rendered, link: update.link } ) ) 
+        json.forEach( ( update: any ) => updates.value.push( { id: update.id, title: update.title.rendered, excerpt: update.excerpt.rendered, link: update.link } ) )
+        if ( updates.value.length ) {
+          current.value = 0
+        }
       } catch ( exception ) {
         console.error( 'Failed to fetch updates' )
       }
@@ -34,9 +39,9 @@
       <header>
         <h2 v-html="update.title"></h2>
       </header>
-      <p v-html="update.excerpt"></p>
+      <p v-show="current && updates[ current ].id === update.id" v-html="update.excerpt"></p>
       <footer>
-        <a :href="update.link">Read</a>
+        <RouterLink :to="update.link">Read</RouterLink>
       </footer>
     </article>
   </nav>
