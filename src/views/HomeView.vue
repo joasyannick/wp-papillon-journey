@@ -9,9 +9,9 @@
   const fetchUpdates = async () => {
       try {
         for ( let [ page, more ] = [ 1, true ]; more; page++ ) {
-          const response = await fetch( import.meta.env.VITE_WP_REST_URL + 'wp/v2/papj-updates?per_page=' + perPage + '&page=' + page + '&_fields=id,title.rendered,excerpt.rendered,link' )
+          const response = await fetch( import.meta.env.VITE_WP_REST_URL + 'wp/v2/papj-updates?per_page=' + perPage + '&page=' + page + '&_fields=id,title.rendered,excerpt.rendered,slug' )
           const json = await response.json()
-          json.forEach( ( update: any ) => updates.value.push( { id: update.id, title: update.title.rendered, excerpt: update.excerpt.rendered, link: update.link } ) )
+          json.forEach( ( update: any ) => updates.value.push( { id: update.id, title: update.title.rendered, excerpt: update.excerpt.rendered, link: '/updates/' + update.slug } ) )
           more = page < parseInt( response.headers.get( 'X-WP-TotalPages' )! )
         }
         if ( updates.value.length ) {

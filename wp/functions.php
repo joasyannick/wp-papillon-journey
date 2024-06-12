@@ -1,7 +1,7 @@
 <?php
   namespace papj;
 
-  require_once get_template_directory() . '/inc/constants.php';
+  require_once get_template_directory() . '/include/constants.php';
 
   function add_query_vars( $query_vars ) {
     $query_vars[] = 'route';
@@ -17,18 +17,26 @@
 
   add_action( 'init', 'papj\add_rewrite_rules' );
 
-  function select_404_template( $template ){
-    if ( get_query_var( 'route' ) != '404' ) :
-        return $template;
+  function change_template_selection( $template ) {
+    $route = get_query_var( 'route' );
+    if ( $route ):
+      if ( $route != '404' ):
+        $matches = [];
+        if ( preg_match( '@^updates/([^/]+)/?$@', $route, $matches ) ):
+          if ( get_posts( [ 'name' => $matches[ 1 ], 'post_type' => UPDATE_POST_TYPE, 'post_status' => 'publish', 'posts_per_page' => 1 ] ) ):
+            return locate_template( 'templates/update.php' );
+          endif;
+        endif;
+      endif;
+      global $wp_query;
+      $wp_query->set_404();
+      status_header( 404 );
+      $template = locate_template( '404.php' );
     endif;
-    global $wp_query;
-    $wp_query->set_404();
-    status_header( 404 );
-    $template = locate_template( '404.php' );
     return $template;
   }
 
-  add_filter( 'template_include', 'papj\select_404_template' );
+  add_filter( 'template_include', 'papj\change_template_selection' );
 
   function enqueue_styles() {
     $vue_css = '/assets/app/index.css';
