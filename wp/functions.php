@@ -3,6 +3,33 @@
 
   require_once get_template_directory() . '/inc/constants.php';
 
+  function add_query_vars( $query_vars ) {
+    $query_vars[] = 'route';
+    return $query_vars;
+  }
+
+  add_filter( 'query_vars', 'papj\add_query_vars' );
+
+  function add_rewrite_rules() {
+    add_rewrite_rule( '^(updates/[^/]+)/?$', 'index.php?route=$matches[1]', 'top' );
+    add_rewrite_rule( '^.+/?$', 'index.php?route=404', 'top' );
+  }
+
+  add_action( 'init', 'papj\add_rewrite_rules' );
+
+  function select_404_template( $template ){
+    if ( get_query_var( 'route' ) != '404' ) :
+        return $template;
+    endif;
+    global $wp_query;
+    $wp_query->set_404();
+    status_header( 404 );
+    $template = locate_template( '404.php' );
+    return $template;
+  }
+
+  add_filter( 'template_include', 'papj\select_404_template' );
+
   function enqueue_styles() {
     $vue_css = '/assets/app/index.css';
     wp_enqueue_style( 'papj-vue', get_template_directory_uri() . $vue_css, [], date( 'Y.m.d.H.i.s', filemtime( get_template_directory() . $vue_css ) ) );
@@ -54,7 +81,7 @@
             'supports' => [ 'title', 'editor', 'thumbnail' ],
             'show_in_rest' => true,
             'rest_base' => DEVOTIONAL_IN_REST,
-        ]
+          ]
       );
     register_post_type(
         LANGUAGE_POST_TYPE, [
@@ -93,7 +120,7 @@
             'supports' => [ 'title', 'editor', 'thumbnail' ],
             'show_in_rest' => true,
             'rest_base' => LANGUAGE_IN_REST,
-        ]
+          ]
       );
     register_post_type(
         UPDATE_POST_TYPE, [
@@ -132,7 +159,7 @@
             'supports' => [ 'title', 'editor', 'excerpt', 'thumbnail' ],
             'show_in_rest' => true,
             'rest_base' => UPDATE_IN_REST,
-        ]
+          ]
       );
   }
   

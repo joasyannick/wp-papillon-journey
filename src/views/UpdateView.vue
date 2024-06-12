@@ -22,12 +22,12 @@
 </script>
 
 <template>
-  <section v-if="update" class="papj-update">
+  <article v-if="update" class="papj-update">
     <header>
-      <h2 v-html="update.title"></h2>
+      <h1 v-html="update.title"></h1>
     </header>
     <div v-html="update.content"></div>
-  </section>
+  </article>
 </template>
 
 <style scoped>
