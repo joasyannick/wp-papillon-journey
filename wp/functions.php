@@ -24,7 +24,7 @@
         $matches = [];
         if ( preg_match( '@^updates/([^/]+)/?$@', $route, $matches ) ):
           if ( get_posts( [ 'name' => $matches[ 1 ], 'post_type' => UPDATE_POST_TYPE, 'post_status' => 'publish', 'posts_per_page' => 1 ] ) ):
-            return locate_template( 'templates/update.php' );
+            return locate_template( 'singular.php' );
           endif;
         endif;
       endif;
