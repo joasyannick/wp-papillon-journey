@@ -7,14 +7,13 @@
   
   const fetchPost = async () => {
       try {
-        const request = import.meta.env.VITE_WP_REST_URL + 'wp/v2/papj-updates?slug=' + slug + '&_fields=title.rendered,content.rendered'
-        const response = await fetch( request )
-        const updates = await response.json()
-        if ( updates.length ) {
-          update.value = { title: updates[ 0 ].title.rendered, content: updates[ 0 ].content.rendered }
+        const response = await fetch( import.meta.env.VITE_WP_REST_URL + 'wp/v2/papj-updates?slug=' + slug + '&_fields=title.rendered,content.rendered' )
+        const json = await response.json()
+        if ( json.length ) {
+          update.value = { title: json[ 0 ].title.rendered, content: json[ 0 ].content.rendered }
         }
       } catch ( exception ) {
-        console.error( 'Failed to fetch the update' )
+        console.error( 'Failed to fetch the update "' + slug + '": ' + exception )
       }
     }
 
@@ -26,7 +25,8 @@
     <header>
       <h1 v-html="update.title"></h1>
     </header>
-    <div v-html="update.content"></div>
+    <div v-html="update.content">
+    </div>
   </article>
 </template>
 

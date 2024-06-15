@@ -18,7 +18,7 @@
           current.value = 0
         }
       } catch ( exception ) {
-        console.error( 'Failed to fetch updates' )
+        console.error( 'Failed to fetch updates: ' + exception )
       }
     }
 
