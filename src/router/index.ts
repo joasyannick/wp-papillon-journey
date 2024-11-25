@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { FR_LANGUAGE } from '@/constants'
+import { useLanguageStore } from '@/stores/language'
 import BaseView from '@/views/BaseView.vue'
 import HomeView from '@/views/HomeView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
@@ -24,11 +26,6 @@ const router = createRouter( {
                     component: HomeView
                   },
                 {
-                    path: '404',
-                    name: 'not-found',
-                    component: NotFoundView
-                  },
-                {
                     path: 'en',
                     component: EnBaseView,
                     children: [
@@ -38,16 +35,11 @@ const router = createRouter( {
                             component: EnHomeView,
                           },
                         {
-                            path: '404',
-                            name: 'en-not-found',
-                            component: EnNotFoundView,
-                          },
-                        {
                             path: 'dev/:slug',
                             name: 'en-dev',
                             component: EnDevView,
                           }
-                      ],
+                      ]
                   },
                 {
                     path: 'fr',
@@ -59,20 +51,31 @@ const router = createRouter( {
                             component: FrHomeView,
                           },
                         {
-                            path: '404',
-                            name: 'fr-not-found',
-                            component: FrNotFoundView,
-                          },
-                        {
                             path: 'dev/:slug',
                             name: 'fr-dev',
                             component: FrDevView,
-                          },
-                      ],
+                          }
+                      ]
                   }
               ]
+          },
+        {
+            path: '/404',
+            name: 'not-found',
+            component: NotFoundView,
+            beforeEnter: ( _, __, next ) => next( FR_LANGUAGE === useLanguageStore().language ? { name: 'fr-not-found' } : { name: 'en-not-found' } )
+          },
+        {
+            path: '/en/404',
+            name: 'en-not-found',
+            component: EnNotFoundView
+          },
+        {
+            path: '/fr/404',
+            name: 'fr-not-found',
+            component: FrNotFoundView
           }
-      ],
+      ]
   } )
 
 export default router
