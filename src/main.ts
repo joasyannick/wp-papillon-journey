@@ -11,4 +11,8 @@ const app = createApp( App )
 app.use( createPinia() )
 app.use( router )
 app.use( i18n )
+const dataElement = document.getElementById( 'papj-data' )
+if ( dataElement ) {
+  router.push( JSON.parse( dataElement.textContent! ).route )
+}
 app.mount( '#papj-vue' )
