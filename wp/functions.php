@@ -66,8 +66,12 @@
         if ( EN_LANGUAGE === $route || FR_LANGUAGE === $route ):
           return locate_template( 'index.php' );
         endif;
-        if ( ( preg_match( '@^' . EN_LANGUAGE . '/' . DEV_PATH . '/([^/]+)/?$@', $route, $matches ) || preg_match( '@^' . FR_LANGUAGE . '/' . DEV_PATH . '/([^/]+)/?$@', $route, $matches ) ) &&
-            get_posts( [ 'name' => $matches[ 1 ], 'post_type' => [ KNOW_HOW_POST_TYPE, RELEASE_POST_TYPE ], 'post_status' => 'publish', 'posts_per_page' => 1 ] ) ):
+        if ( ( preg_match( '@^' . EN_LANGUAGE . '/' . DEV_PATH . '/([^/]+)/?$@', $route, $matches ) ) &&
+            get_posts( [ 'name' => $matches[ 1 ], 'post_type' => [ KNOW_HOW_POST_TYPE, RELEASE_POST_TYPE ], 'post_status' => 'publish', 'posts_per_page' => 1, 'meta_query' => [ [ 'key' => LANGUAGE_KEY, 'value' => EN_LANGUAGE, 'compare' => '=' ] ] ] ) ):
+          return locate_template( 'singular.php' );
+        endif;
+        if ( ( preg_match( '@^' . FR_LANGUAGE . '/' . DEV_PATH . '/([^/]+)/?$@', $route, $matches ) ) &&
+            get_posts( [ 'name' => $matches[ 1 ], 'post_type' => [ KNOW_HOW_POST_TYPE, RELEASE_POST_TYPE ], 'post_status' => 'publish', 'posts_per_page' => 1, 'meta_query' => [ [ 'key' => LANGUAGE_KEY, 'value' => FR_LANGUAGE, 'compare' => '=' ] ] ] ) ):
           return locate_template( 'singular.php' );
         endif;
       endif;

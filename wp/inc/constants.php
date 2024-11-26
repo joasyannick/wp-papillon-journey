@@ -8,6 +8,7 @@
   define( 'FR_LANGUAGE', 'fr' );
   define( 'KNOW_HOW_POST_TYPE', 'papj_know_how' );
   define( 'KNOW_HOW_IN_REST', 'papj-know-how' );
+  define( 'LANGUAGE_KEY', 'language' );
   define( 'RELEASE_POST_TYPE', 'papj_release' );
   define( 'RELEASE_IN_REST', 'papj-release' );
 ?>
