@@ -10,12 +10,14 @@
   //-----------
 
 
+  // Enqueue theme stylesheets
   function enqueue_styles() {
     $styles = [ '/assets/css/papillon-journey.css', '/assets/css/index.css' ];
     wp_enqueue_style( 'papj-css-1', get_template_directory_uri() . $styles[ 0 ], [], date( 'Y.m.d.H.i.s', filemtime( get_template_directory() . $styles[ 0 ] ) ) );
     //wp_enqueue_style( 'papj-css-2', get_template_directory_uri() . $styles[ 1 ], [ 'papj-css-1' ], date( 'Y.m.d.H.i.s', filemtime( get_template_directory() . $styles[ 1 ] ) ) );
   }
 
+  // Enqueue theme scripts
   function enqueue_scripts() {
     $script = '/assets/js/index.js';
     wp_enqueue_script( 'papj-js', get_template_directory_uri() . $script, [], date( 'Y.m.d.H.i.s', filemtime( get_template_directory() . $script ) ), true );
@@ -24,6 +26,7 @@
   add_action( 'wp_enqueue_scripts', 'papj\enqueue_styles' );
   add_action( 'wp_enqueue_scripts', 'papj\enqueue_scripts' );
 
+  // Add the type="module" attribute to the script whose handle is papj-js for compatibility with ES6 modules
   function add_vue_js_html_attributes( $tag, $handle, $src ) {
     $prefix = 'papj-js';
     if ( substr($handle, 0, strlen( $prefix ) ) === $prefix ) {
@@ -41,6 +44,7 @@
   //--------
 
 
+  // Add the route query var
   function add_query_vars( $query_vars ) {
     $query_vars[] = 'route';
     return $query_vars;
@@ -48,6 +52,7 @@
 
   add_filter( 'query_vars', 'papj\add_query_vars' );
 
+  // Custom rewrite rules
   function add_rewrite_rules() {
     add_rewrite_rule( '^(' . EN_LANGUAGE . ')/?$', 'index.php?route=$matches[1]', 'top' );
     add_rewrite_rule( '^(' . EN_LANGUAGE . '/' . DEV_PATH . '/[^/]+)/?$', 'index.php?route=$matches[1]', 'top' );
@@ -58,6 +63,7 @@
 
   add_action( 'init', 'papj\add_rewrite_rules' );
 
+  // Custom routing logic
   function change_template_selection( $template ) {
     $route = get_query_var( 'route' );
     if ( $route ):
@@ -92,6 +98,7 @@
   //-----------
 
 
+  // Define the Know-How and Release post types
   function register_post_types() {
     register_post_type( KNOW_HOW_POST_TYPE, [
         'labels' => [
