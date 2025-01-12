@@ -3,13 +3,13 @@
   import { onMounted, ref } from 'vue'
   import Two from 'two.js'
 
-  const main = ref< HTMLElement | null >( null )
+  const game = ref< HTMLElement | null >( null )
 
   onMounted( () => {
       const two = new Two( {
           type: Two.Types.canvas,
           fullscreen: true
-        } ).appendTo( main.value! )
+        } ).appendTo( game.value! )
 
       // Create a triangle
       const triangle = two.makePolygon( 400, 300, 50, 3 ) // x, y, radius, sides
@@ -24,9 +24,13 @@
 </script>
 
 <template>
-  <main id="papj-main" ref="main">
-    <article id="pap-phone-app"></article>
-    <aside id="papj-phone"></aside>
-    <RouterView />
+  <main id="papj-main">
+    <article id="papj-phone-app">
+    </article>
+    <aside id="papj-phone">
+      <RouterView />
+    </aside>
+    <article id="papj-game" ref="game">
+    </article>
   </main>
 </template>
