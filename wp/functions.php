@@ -10,7 +10,7 @@
   //-----------
 
 
-  // Enqueue theme stylesheets
+  // Enqueue theme styles
   function enqueue_styles() {
     $styles = [ '/assets/css/papillon-journey.css', '/assets/css/index.css' ];
     wp_enqueue_style( 'papj-css-1', get_template_directory_uri() . $styles[ 0 ], [], date( 'Y.m.d.H.i.s', filemtime( get_template_directory() . $styles[ 0 ] ) ) );
@@ -29,9 +29,9 @@
   // Add the type="module" attribute to the script whose handle is papj-js for compatibility with ES6 modules
   function add_vue_js_html_attributes( $tag, $handle, $src ) {
     $prefix = 'papj-js';
-    if ( substr($handle, 0, strlen( $prefix ) ) === $prefix ) {
+    if ( substr( $handle, 0, strlen( $prefix ) ) === $prefix ):
       return preg_replace( '/(type\s*=\s*["\']).*?(["\'])/', '$1module$2', $tag, 1 );
-    }
+    endif;
     return $tag;
   }
 
@@ -182,25 +182,25 @@
   function register_post_meta() {
     register_post_meta( KNOW_HOW_POST_TYPE, LANGUAGE_KEY, [
         'type' => 'string',
-        'description' => 'Language of the know-How',
+        'description' => __( 'Language of the know-How', DOMAIN ),
         'single' => true,
         'show_in_rest' => true
       ] );
     register_post_meta( KNOW_HOW_POST_TYPE, TRANSLATION_KEY, [
         'type' => 'string',
-        'description' => 'Translation of the know-How',
+        'description' => __( 'Translation of the know-How', DOMAIN ),
         'single' => true,
         'show_in_rest' => true
       ] );
     register_post_meta( RELEASE_POST_TYPE, LANGUAGE_KEY, [
         'type' => 'string',
-        'description' => 'Language of the release',
+        'description' => __( 'Language of the release', DOMAIN ),
         'single' => true,
         'show_in_rest' => true
       ] );
     register_post_meta( RELEASE_POST_TYPE, TRANSLATION_KEY, [
         'type' => 'string',
-        'description' => 'Translation of the release',
+        'description' => __( 'Translation of the release', DOMAIN ),
         'single' => true,
         'show_in_rest' => true
       ] );
