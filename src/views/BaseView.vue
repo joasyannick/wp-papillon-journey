@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import { RouterView } from 'vue-router'
-  import { onMounted, ref } from 'vue'
-  import Two from 'two.js'
+  import { ref } from 'vue'
   import * as constants from '@/constants'
   import Phone from '@/components/Phone.vue'
   import Apollon from '@/components/apps/apollon/Apollon.vue'
@@ -11,8 +10,7 @@
   import Monarque from '@/components/apps/monarque/Monarque.vue'
   import Vulcain from '@/components/apps/vulcain/Vulcain.vue'
   import Settings from '@/components/apps/settings/Settings.vue'
-
-  const game = ref< HTMLElement | null >( null )
+  import PapillonJourney from '@/components/PapillonJourney.vue'
 
   const openedApp = ref< string | null >( null )
 
@@ -27,7 +25,7 @@
     ] )
 
   const onAppOpened = ( key: string ) => {
-      if ( null === openedApp.value ) {
+      if ( null === openedApp.value && apps.has( key ) ) {
         openedApp.value = key
       }
     }
@@ -36,30 +34,14 @@
       openedApp.value = null
     }
 
-  onMounted( () => {
-      const two = new Two( {
-          type: Two.Types.canvas,
-          fullscreen: true
-        } ).appendTo( game.value! )
 
-      // Create a triangle
-      const triangle = two.makePolygon( 400, 300, 50, 3 ) // x, y, radius, sides
-      triangle.stroke = "#ff0000"
-      triangle.fill = "#ffcccc"
-      triangle.linewidth = 4
-
-      two.bind( "update", () => {
-          triangle.rotation += 0.02 // Rotate the triangle
-        } ).play()
-    } )
 </script>
 
 <template>
   <RouterView />
-  <component v-if="openedApp && apps.has( openedApp )" :is="apps.get( openedApp )" @closed="onAppClosed" />
+  <component v-if="openedApp" :is="apps.get( openedApp )" @closed="onAppClosed" />
   <Phone @app-opened="onAppOpened"/>
-  <main id="papj-game" ref="game">
-  </main>
+  <PapillonJourney />
 </template>
 
 <style scoped>
