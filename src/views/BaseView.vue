@@ -10,23 +10,31 @@
   import Monarque from '@/components/apps/monarque/Monarque.vue'
   import Vulcain from '@/components/apps/vulcain/Vulcain.vue'
   import Settings from '@/components/apps/settings/Settings.vue'
+  import Hub from '@/components/apps/hub/Hub.vue'
+  import Joas from '@/components/apps/joas/Joas.vue'
+  import GameMap from '@/components/apps/map/Map.vue'
+  import Store from '@/components/apps/store/Store.vue'
   import PapillonJourney from '@/components/PapillonJourney.vue'
 
   const openedApp = ref< string | null >( null )
 
   const apps = new Map( [
-      [ constants.APOLLON_KEY, Apollon ],
-      [ constants.AURORE_KEY, Aurore ],
-      [ constants.BEL_ARGUS_KEY, BelArgus ],
-      [ constants.DIANE_KEY, Diane ],
-      [ constants.MONARQUE_KEY, Monarque ],
-      [ constants.VULCAIN_KEY, Vulcain ],
-      [ constants.SETTINGS_KEY, Settings ]
+      [ constants.APOLLON_ID, Apollon ],
+      [ constants.AURORE_ID, Aurore ],
+      [ constants.BEL_ARGUS_ID, BelArgus ],
+      [ constants.DIANE_ID, Diane ],
+      [ constants.MONARQUE_ID, Monarque ],
+      [ constants.VULCAIN_ID, Vulcain ],
+      [ constants.SETTINGS_ID, Settings ],
+      [ constants.HUB_ID, Hub ],
+      [ constants.JOAS_ID, Joas ],
+      [ constants.MAP_ID, GameMap ],
+      [ constants.STORE_ID, Store ]
     ] )
 
-  const onAppOpened = ( key: string ) => {
-      if ( null === openedApp.value && apps.has( key ) ) {
-        openedApp.value = key
+  const onAppOpened = ( appId: string ) => {
+      if ( null === openedApp.value && apps.has( appId ) ) {
+        openedApp.value = appId
       }
     }
 
@@ -39,7 +47,7 @@
 
 <template>
   <RouterView />
-  <component v-if="openedApp" :is="apps.get( openedApp )" @closed="onAppClosed" />
+  <component v-if="openedApp" :key="openedApp" :is="apps.get( openedApp )" @closed="onAppClosed" />
   <Phone @app-opened="onAppOpened"/>
   <PapillonJourney />
 </template>
