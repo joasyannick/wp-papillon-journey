@@ -10,6 +10,6 @@
 </script>
 
 <template>
-  <BaseApp :class="'papj-' + constants.BEL_ARGUS_ID" @closed="onClosed">
+  <BaseApp :class="'papj-' + constants.BLOG_ID" @closed="onClosed">
   </BaseApp>
 </template>

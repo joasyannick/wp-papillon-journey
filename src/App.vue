@@ -3,13 +3,13 @@
 </script>
 
 <template>
-  <div id="papj-app">
+  <div class="papj-app">
     <RouterView />
   </div>
 </template>
 
 <style scoped>
-  div#papj-app {
+  div.papj-app {
     position: absolute;
     inset: 0;
     overflow: clip;

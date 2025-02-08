@@ -2,6 +2,7 @@
   import { onMounted, ref } from 'vue'
   import Two from 'two.js'
 
+  const props = defineProps< { paused: boolean } >()
   const game = ref< HTMLElement | null >( null )
 
   onMounted( () => {
@@ -23,7 +24,7 @@
 </script>
 
 <template>
-  <main id="papj-game" ref="game">
+  <main class="papj-game" ref="game">
   </main>
 </template>
 

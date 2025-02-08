@@ -9,14 +9,14 @@
   import VulcainIcon from '@/components/apps/vulcain/icons/Vulcain.vue'
   import SettingsIcon from '@/components/apps/settings/icons/Settings.vue'
   import HubIcon from '@/components/apps/hub/icons/Hub.vue'
-  import JoasIcon from '@/components/apps/joas/icons/Joas.vue'
+  import JoasIcon from '@/components/apps/blog/icons/Blog.vue'
   import MapIcon from '@/components/apps/map/icons/Map.vue'
   import StoreIcon from '@/components/apps/store/icons/Store.vue'
   import PhoneIcon from '@/components/icons/Phone.vue'
 
-  const emit = defineEmits< { appStarted: [ appId: string ] } >()
+  const emit = defineEmits< { phoneUseChanged: [ used: boolean ], appOpened: [ appId: string ] } >()
 
-  const held = ref( false )
+  const used = ref( false )
 
   const CLASS_PREFIX = 'papj-app-'
 
@@ -32,38 +32,45 @@
 
   const featuredApps = new Map( [
       [ constants.HUB_ID, { icon: HubIcon, class: CLASS_PREFIX + constants.HUB_ID } ],
-      [ constants.JOAS_ID, { icon: JoasIcon, class: CLASS_PREFIX + constants.JOAS_ID } ],
+      [ constants.BLOG_ID, { icon: JoasIcon, class: CLASS_PREFIX + constants.BLOG_ID } ],
       [ constants.MAP_ID, { icon: MapIcon, class: CLASS_PREFIX + constants.MAP_ID } ],
       [ constants.STORE_ID, { icon: StoreIcon, class: CLASS_PREFIX + constants.STORE_ID } ]
     ] )
 
-  const hold = () => {
-      held.value = true
+  const use = () => {
+      used.value = true
+      emit( 'phoneUseChanged', true )
+    }
+  
+  const stopUsing = () => {
+      used.value = false
+      emit( 'phoneUseChanged', false )
     }
 
   const startApp = ( appId: string ) => {
-      emit( 'appStarted', appId )
+      emit( 'appOpened', appId )
     }
 </script>
 
 <template>
-  <header id="papj-phone">
-    <section id="papj-apps" v-if="held">
-      <section id="papj-favorite-apps">
+  <header class="papj-phone">
+    <section class="papj-apps" v-if="used">
+      <section class="papj-favorite-apps">
         <label v-for="[ appId, app ] in apps" :key="appId" :class="app.class"><button type="button" @click="startApp( appId )"><component :key="appId" :is="app.icon"/></button><span>{{ app.name }}</span></label>
       </section>
-      <section id="papj-featured-apps">
+      <section class="papj-featured-apps">
         <label v-for="[ appId, app ] in featuredApps" :key="appId" :class="app.class"><button type="button" @click="startApp( appId )"><component :key="appId" :is="app.icon"/></button></label>
       </section>
+      <button class="papj-stop-using" type="button" @click="stopUsing">X</button>
     </section>
-    <button id="papj-phone-button" type="button" @click="hold">
+    <button class="papj-use" type="button" @click="use">
       <PhoneIcon />
     </button>
   </header>
 </template>
 
 <style scoped>
-  header#papj-phone {
+  header.papj-phone {
     position: absolute;
     z-index: 1;
     display: flex;
@@ -71,7 +78,7 @@
     align-items: center;
   }
 
-  header#papj-phone > button {
+  header.papj-phone > button.papj-use {
     width: 50px;
   }
 </style>

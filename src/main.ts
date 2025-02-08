@@ -15,4 +15,4 @@ const dataElement = document.getElementById( 'papj-data' )
 if ( dataElement ) {
   router.push( JSON.parse( dataElement.textContent! ).route )
 }
-app.mount( '#papj-vue' )
+app.mount( '#papj-app' )

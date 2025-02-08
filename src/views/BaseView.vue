@@ -11,11 +11,12 @@
   import Vulcain from '@/components/apps/vulcain/Vulcain.vue'
   import Settings from '@/components/apps/settings/Settings.vue'
   import Hub from '@/components/apps/hub/Hub.vue'
-  import Joas from '@/components/apps/joas/Joas.vue'
+  import Blog from '@/components/apps/blog/Blog.vue'
   import GameMap from '@/components/apps/map/Map.vue'
   import Store from '@/components/apps/store/Store.vue'
   import PapillonJourney from '@/components/PapillonJourney.vue'
 
+  const phoneUsed = ref< boolean >( false )
   const openedApp = ref< string | null >( null )
 
   const apps = new Map( [
@@ -27,10 +28,14 @@
       [ constants.VULCAIN_ID, Vulcain ],
       [ constants.SETTINGS_ID, Settings ],
       [ constants.HUB_ID, Hub ],
-      [ constants.JOAS_ID, Joas ],
+      [ constants.BLOG_ID, Blog ],
       [ constants.MAP_ID, GameMap ],
       [ constants.STORE_ID, Store ]
     ] )
+  
+  const onPhoneUseChanged = ( used: boolean ) => {
+      phoneUsed.value = used
+    }
 
   const onAppOpened = ( appId: string ) => {
       if ( null === openedApp.value && apps.has( appId ) ) {
@@ -41,15 +46,13 @@
   const onAppClosed = () => {
       openedApp.value = null
     }
-
-
 </script>
 
 <template>
   <RouterView />
   <component v-if="openedApp" :key="openedApp" :is="apps.get( openedApp )" @closed="onAppClosed" />
-  <Phone @app-opened="onAppOpened"/>
-  <PapillonJourney />
+  <Phone @phone-use-changed="onPhoneUseChanged" @app-opened="onAppOpened"/>
+  <PapillonJourney :paused="phoneUsed" />
 </template>
 
 <style scoped>

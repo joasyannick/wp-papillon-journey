@@ -7,7 +7,7 @@ body {
   overflow: clip;
 }
 
-body > div#papj-vue {
+body > div#papj-app {
   position: absolute;
   inset: 0;
   overflow: clip;
