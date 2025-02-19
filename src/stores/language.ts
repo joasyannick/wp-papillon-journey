@@ -8,8 +8,8 @@ const validateLanguage = ( language: string ) => { return isValidLanguage( langu
 
 export const useLanguageStore = defineStore( LANGUAGE_KEY, () => {
     const preferredLanguages = usePreferredLanguages().value.map( ( language ) => language.split( '-' )[ 0 ].toLowerCase() ).filter( isValidLanguage )
-    const language = useLocalStorage( LANGUAGE_KEY, preferredLanguages.length ? preferredLanguages[ 0 ] : EN_LANGUAGE )
-    const setLanguage = ( newLanguage: string ) => { language.value = validateLanguage( newLanguage ) }
-    watch( language, ( newLanguage ) => { localStorage.setItem( LANGUAGE_KEY, newLanguage ) } )
-    return { language, setLanguage }
+    const current = useLocalStorage( LANGUAGE_KEY, preferredLanguages.length ? preferredLanguages[ 0 ] : EN_LANGUAGE )
+    const set = ( newLanguage: string ) => { current.value = validateLanguage( newLanguage ) }
+    watch( current, ( newLanguage ) => { localStorage.setItem( LANGUAGE_KEY, newLanguage ) } )
+    return { current, set }
   } )

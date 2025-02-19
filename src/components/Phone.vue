@@ -15,6 +15,7 @@
   import MapIcon from '@/components/apps/map/icons/Map.vue'
   import PhoneIcon from '@/components/icons/Phone.vue'
 
+  // TODO: Apps are now called with RouterLink, so we need to update the way we handle the apps
   const emit = defineEmits< { phoneUseChanged: [ used: boolean ], appOpened: [ appId: string ] } >()
 
   const used = ref( false )
@@ -56,7 +57,7 @@
 
 <template>
   <header class="papj-phone">
-    <section class="papj-apps" v-if="used">
+    <nav class="papj-apps" v-if="used">
       <section class="papj-favorite-apps">
         <label v-for="[ appId, app ] in favoriteApps" :key="appId" :class="app.class"><button type="button" @click="startApp( appId )"><component :key="appId" :is="app.icon"/></button><span>{{ app.name }}</span></label>
       </section>
@@ -64,7 +65,7 @@
         <label v-for="[ appId, app ] in featuredApps" :key="appId" :class="app.class"><button type="button" @click="startApp( appId )"><component :key="appId" :is="app.icon"/></button></label>
       </section>
       <button class="papj-stop-using" type="button" @click="stopUsing">X</button>
-    </section>
+    </nav>
     <button class="papj-use" type="button" @click="use">
       <PhoneIcon />
     </button>

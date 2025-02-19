@@ -3,7 +3,7 @@
   import Two from 'two.js'
 
   const props = defineProps< { paused: boolean } >()
-  const game = ref< HTMLElement | null >( null )
+  const game = ref< null | HTMLElement >( null )
 
   onMounted( () => {
       const two = new Two( {
