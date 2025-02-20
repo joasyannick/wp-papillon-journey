@@ -2,8 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { EN_LANGUAGE, FR_LANGUAGE } from '@/constants'
 import { useLanguageStore } from '@/stores/language'
 import DummyView from '@/views/DummyView.vue'
-import BaseView from '@/views/BaseView.vue'
-import HomeView from '@/views/HomeView.vue'
+import GameView from '@/views/GameView.vue'
 import AppsView from '@/views/AppsView.vue'
 import AppView from '@/views/AppView.vue'
 import BlogView from '@/views/BlogView.vue'
@@ -22,13 +21,13 @@ const router = createRouter( {
           },
         {
             path: '/en',
-            component: BaseView,
+            component: GameView,
             beforeEnter: () => useLanguageStore().set( EN_LANGUAGE ),
             children: [
                 {
                     path: '',
                     name: 'en-home',
-                    component: HomeView,
+                    component: DummyView,
                   },
                 {
                     path: 'apps',
@@ -61,13 +60,13 @@ const router = createRouter( {
           },
         {
             path: '/fr',
-            component: BaseView,
+            component: GameView,
             beforeEnter: () => useLanguageStore().set( FR_LANGUAGE ),
             children: [
                 {
                     path: '',
                     name: 'fr-home',
-                    component: HomeView,
+                    component: DummyView,
                   },
                 {
                     path: 'apps',
