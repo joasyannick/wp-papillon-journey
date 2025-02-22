@@ -9,9 +9,9 @@ assignees: ''
 
 ### Feature Request
 
-A brief explanation of what the feature is, what it does, and what it doesn’t include.
+Provide a brief explanation of what the feature is, what it does, and what it doesn’t include.
 
-Example: Add a toggle for Dark Mode, allowing users to switch between Light Mode and Dark Mode. This will reduce eye strain, especially in low-light environments, and improve usability for users who prefer darker themes. This is not requesting a full theme system.
+Example: Add a toggle for Dark Mode, allowing users to switch between Light Mode and Dark Mode. This will reduce eye strain, especially in low-light environments, and improve usability for users who prefer darker themes. This does not include a full theme system.
 
 ### Current Pains
 
@@ -20,7 +20,7 @@ Describe the problems users face with stories:
 - As a ***user role***, I find it frustrating that ***pain point***, leading to ***negative impact***.
 
 Examples:
-- As a night-time user, I struggle with bright UI because it causes eye strain in low-light conditions.
+- As a nighttime user, I struggle with a bright UI because it causes eye strain in low-light conditions.
 - As a mobile user with an OLED screen, I find it frustrating that the UI is always in Light Mode, leading to faster battery drain.
 
 ### Future Gains
@@ -46,10 +46,10 @@ Example:
   - When they toggle the "Dark Mode" switch;
   - Then the UI should switch to a dark-themed interface.
 - Load Images Unchanged:
-  - Given Dark Mode is enabled;
-  - When a page with images loads;
-  - Then images should remain unaffected.
+  - Given Dark Mode is active;
+  - When a page containing images is loaded;
+  - Then the images should display without any changes.
 
 ### Additional Notes
 
-Any relevant context, dependencies, open questions, or considerations for implementation.
+Include any relevant context, dependencies, open questions, or considerations for implementation.
