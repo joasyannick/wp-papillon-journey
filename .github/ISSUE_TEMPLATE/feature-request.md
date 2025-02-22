@@ -15,7 +15,7 @@ Example: Add a toggle for Dark Mode, allowing users to switch between Light Mode
 
 ### Current Pains
 
-Describe the problems users face with stories:
+Describe the problems users face using stories:
 - As a ***user role***, I struggle with ***problem*** because ***reason***.
 - As a ***user role***, I find it frustrating that ***pain point***, leading to ***negative impact***.
 
