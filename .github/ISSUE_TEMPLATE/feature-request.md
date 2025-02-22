@@ -45,7 +45,7 @@ Example:
   - Given a user is in the settings menu;
   - When they toggle the "Dark Mode" switch;
   - Then the UI should switch to a dark-themed interface.
-- Images and Dark Mode:
+- Load Images Unchanged:
   - Given Dark Mode is enabled;
   - When a page with images loads;
   - Then images should remain unaffected.
