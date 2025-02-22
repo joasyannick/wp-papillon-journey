@@ -32,11 +32,20 @@ Examples:
 
 ### Acceptance Criteria
 Define pass/fail conditions using Given-When-Then. Include multiple scenarios if applicable:
-- Given ***context***; When ***action***; Then ***outcome***.
+- Scenario Title:
+  - Given ***context***;
+  - When ***action***;
+  - Then ***outcome***.
 
 Example:
-- Given a user is in the settings menu; When they toggle the "Dark Mode" switch; Then the UI should switch to a dark-themed interface.
-- Given Dark Mode is enabled; When a page with images loads; Then images should remain unaffected.
+- Activate Dark Mode:
+  - Given a user is in the settings menu;
+  - When they toggle the "Dark Mode" switch;
+  - Then the UI should switch to a dark-themed interface.
+- Images and Dark Mode:
+  - Given Dark Mode is enabled;
+  - When a page with images loads;
+  - Then images should remain unaffected.
 
 ### Additional Notes
 
