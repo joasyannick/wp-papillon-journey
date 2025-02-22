@@ -1,13 +1,13 @@
 ---
 name: Feature Request
 about: Suggest a new feature or improvement
-title: Feature Request – Title
+title: ''
 labels: ''
 assignees: ''
 
 ---
 
-### Feature
+### Feature Request
 A brief explanation of what the feature is, what it does, and what it doesn’t include.
 
 Example: Add a toggle for Dark Mode, allowing users to switch between Light Mode and Dark Mode. This will reduce eye strain, especially in low-light environments, and improve usability for users who prefer darker themes. This is not requesting a full theme system.
