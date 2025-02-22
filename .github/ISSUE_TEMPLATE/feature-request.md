@@ -10,6 +10,8 @@ assignees: ''
 ### Feature
 A brief explanation of what the feature is, what it does, and what it doesn’t include.
 
+Example: Add a toggle for Dark Mode, allowing users to switch between Light Mode and Dark Mode. This will reduce eye strain, especially in low-light environments, and improve usability for users who prefer darker themes. This is not requesting a full theme system.
+
 ### Current Pains
 Describe the problems users face with stories:
 - As a ***user role***, I struggle with ***problem*** because ***reason***.
@@ -30,11 +32,11 @@ Examples:
 
 ### Acceptance Criteria
 Define pass/fail conditions using Given-When-Then. Include multiple scenarios if applicable:
-- Given ***context***; when ***action***; then ***outcome***.
+- Given ***context***; When ***action***; Then ***outcome***.
 
 Example:
-- Given a user is in the settings menu; when they toggle the "Dark Mode" switch; then the UI should switch to a dark-themed interface.
-- Given Dark Mode is enabled; when a page with images loads; then images should remain unaffected.
+- Given a user is in the settings menu; When they toggle the "Dark Mode" switch; Then the UI should switch to a dark-themed interface.
+- Given Dark Mode is enabled; When a page with images loads; Then images should remain unaffected.
 
 ### Additional Notes
 
